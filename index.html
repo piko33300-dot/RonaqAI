@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#7047D7">
+<meta name="description" content="رونق - أفكارك، بتصميم أذكى">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg">
+<title>رونق | RonaqAI</title>
+<style>
+:root {
+  --purple:#7047D7;
+  --dark:#4B269C;
+  --light:#E8DFFF;
+  --bg:#F7F4FF;
+  --ink:#29213D;
+  --muted:#817694;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:Tahoma,Arial,sans-serif
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.app{
+  max-width:600px;margin:auto;min-height:100vh;
+  padding:18px 16px 100px
+}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{
+  width:49px;height:49px;border-radius:16px;
+  display:grid;place-items:center;color:white;
+  font-size:30px;font-weight:bold;
+  background:linear-gradient(135deg,#A78BFA,var(--purple))
+}
+.brand h1{margin:0;font-size:25px}
+.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.hero{
+  background:linear-gradient(135deg,#8D6BE5,var(--dark));
+  color:white;padding:25px 20px;border-radius:24px;
+  box-shadow:0 10px 25px #7047D72A
+}
+.tag{background:#ffffff25;padding:7px 11px;border-radius:20px;font-size:12px}
+.hero h2{font-size:25px;line-height:1.6;margin:17px 0 7px}
+.hero p{font-size:14px;line-height:1.9;color:#f0eaff}
+.primary,.secondary{
+  border:0;border-radius:12px;padding:13px 16px;font-weight:bold
+}
+.primary{background:white;color:var(--dark)}
+.secondary{background:var(--purple);color:white}
+section{margin-top:27px}
+.heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
+.heading h3{font-size:18px;margin:0}
+.heading small{font-size:12px;color:var(--muted)}
+.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.tool{
+  text-align:right;background:white;color:var(--ink);
+  border:1px solid #eee7fa;border-radius:17px;padding:15px 13px;
+  min-height:120px
+}
+.tool:active{transform:scale(.98)}
+.ico{
+  display:grid;place-items:center;width:42px;height:42px;
+  border-radius:13px;background:var(--light);
+  font-size:22px;margin-bottom:11px
+}
+.tool strong{display:block;font-size:14px}
+.tool small{display:block;color:var(--muted);font-size:12px;line-height:1.7;margin-top:6px}
+.feature{grid-column:1/-1;background:var(--purple);color:white;min-height:100px}
+.feature .ico{background:#ffffff25}
+.feature small{color:#f0eaff}
+.panel{background:white;border:1px solid #eee7fa;border-radius:18px;padding:15px}
+.upload{
+  border:2px dashed #cdbcf6;border-radius:15px;
+  text-align:center;padding:22px 12px;background:#fcfaff
+}
+.upload p{font-size:13px;color:var(--muted)}
+.preview{display:none;max-width:100%;max-height:350px;object-fit:contain;margin:15px auto}
+.project-list{display:grid;gap:10px}
+.project{display:flex;align-items:center;gap:10px;background:white;border:1px solid #eee7fa;border-radius:13px;padding:13px}
+.project-info{flex:1;min-width:0;overflow-wrap:anywhere}
+.project-info small{display:block;color:var(--muted);margin-top:5px}
+.delete{border:0;border-radius:9px;background:#fff0f2;color:#a51d42;padding:9px}
+.empty{text-align:center;color:var(--muted);padding:20px}
+.note{font-size:12px;color:var(--muted);line-height:1.9;margin-top:25px}
+nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:600px;display:flex;justify-content:space-around;
+  background:#ffffffed;border-top:1px solid #eee7fa;
+  padding:11px 5px calc(11px + env(safe-area-inset-bottom))
+}
+nav button{border:0;background:none;color:var(--muted);font-size:11px}
+nav b{display:block;font-size:22px;margin-bottom:4px}
+nav .active{color:var(--purple)}
+.modal{
+  display:none;position:fixed;inset:0;z-index:5;
+  background:#21163888;padding:15px;align-items:center;justify-content:center
+}
+.dialog{background:white;border-radius:20px;padding:20px;width:100%;max-width:460px}
+.dialog h3{margin-top:0}
+.dialog label{display:block;font-size:13px;font-weight:bold}
+.dialog input,.dialog textarea{
+  width:100%;padding:12px;border:1px solid #ded3f4;
+  border-radius:11px;margin:8px 0 14px;background:#fcfaff
+}
+.dialog textarea{min-height:95px}
+.actions{display:flex;gap:10px}
+.actions button{flex:1}
+.cancel{background:var(--light);color:var(--dark);border:0;border-radius:11px;padding:12px}
+@media(min-width:480px){.app{padding:25px 22px 105px}}
+</style>
+</head>
+<body>
+<main class="app">
+<header>
+  <div class="brand">
+    <div class="logo">ر</div>
+    <div><h1>رونق</h1><p>أفكارك، بتصميم أذكى.</p></div>
+  </div>
+  <button class="secondary" onclick="newProject()">＋ جديد</button>
+</header>
+
+<div class="hero">
+  <span class="tag">✦ مساحة إبداعك</span>
+  <h2>حوّل أفكارك إلى تصاميم!</h2>
+  <p>ابدأ مشروعك الإبداعي واجعل أفكارك تنبض بالحياة.</p>
+  <button class="primary" onclick="newProject()">＋ إنشاء تصميم جديد</button>
+</div>
+
+<section>
+  <div class="heading"><h3>أدواتك الإبداعية</h3><small>اختر أداة</small></div>
+  <div class="tools">
+    <button class="tool feature" onclick="newProject()">
+      <span class="ico">✨</span>
+      <strong>إنشاء صورة بالذكاء الاصطناعي</strong>
+      <small>اكتب وصف الصورة التي تتخيلها</small>
+    </button>
+    <button class="tool" onclick="chooseImage()">
+      <span class="ico">🖼️</span><strong>اختيار صورة</strong>
+      <small>اختر صورة من هاتفك</small>
+    </button>
+    <button class="tool" onclick="removeBg()">
+      <span class="ico">✂️</span><strong>إزالة الخلفية</strong>
+      <small>أداة معالجة الصور</small>
+    </button>
+    <button class="tool" onclick="showProjects()">
+      <span class="ico">📁</span><strong>مشاريعي المحفوظة</strong>
+      <small>اعرض مشاريعك</small>
+    </button>
+    <button class="tool" onclick="voiceInput()">
+      <span class="ico">🎙️</span><strong>التصميم بالصوت</strong>
+      <small>أملِ وصف فكرتك</small>
+    </button>
+    <button class="tool" onclick="newProject('تصميم عربي')">
+      <span class="ico">ع</span><strong>الكتابة العربية</strong>
+      <small>أضف نصوصك إلى المشروع</small>
+    </button>
+    <button class="tool" onclick="newProject('قالب جديد')">
+      <span class="ico">▦</span><strong>قوالب التصميم</strong>
+      <small>ابدأ فكرة جديدة</small>
+    </button>
+  </div>
+</section>
+
+<section id="editor">
+  <div class="heading"><h3>معاينة الصور</h3><small>من هاتفك</small></div>
+  <div class="panel">
+    <div class="upload">
+      <div style="font-size:35px">🎨</div>
+      <strong>أضف صورة إلى مساحة العمل</strong>
+      <p>اختر صورة من جهازك لمعاينتها</p>
+      <button class="secondary" onclick="chooseImage()">اختيار صورة</button>
+      <input id="imageInput" type="file" accept="image/*" hidden>
+      <img id="preview" class="preview" alt="الصورة المختارة">
+      <div><button id="downloadImage" class="cancel" style="display:none" onclick="saveImage()">حفظ نسخة من الصورة</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="projectsSection">
+  <div class="heading"><h3>مشاريعي</h3><small>على هذا المتصفح</small></div>
+  <div id="projects" class="project-list"></div>
+</section>
+
+<p class="note">
+  هذه نسخة أولية. حفظ المشاريع ومعاينة الصور يعملان محليًا.
+  توليد الصور الحقيقي وإزالة الخلفية يحتاجان إلى ربط خدمة ذكاء اصطناعي.
+</p>
+</main>
+
+<nav>
+  <button class="active" onclick="home(this)"><b>⌂</b>الرئيسية</button>
+  <button onclick="newProject()"><b>＋</b>تصميم جديد</button>
+  <button onclick="showProjects()"><b>▤</b>مشاريعي</button>
+  <button onclick="chooseImage()"><b>▧</b>صوري</button>
+</nav>
+
+<div id="modal" class="modal">
+  <div class="dialog">
+    <h3>إنشاء مشروع جديد</h3>
+    <label for="pname">اسم المشروع</label>
+    <input id="pname" maxlength="100" placeholder="مثال: تصميم إعلان">
+    <label for="pdesc">وصف الفكرة</label>
+    <textarea id="pdesc" maxlength="2000" placeholder="اكتب وصف التصميم الذي تريد إنشاءه..."></textarea>
+    <div class="actions">
+      <button class="secondary" onclick="saveProject()">حفظ المشروع</button>
+      <button class="cancel" onclick="closeModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let projects=[];
+let imageData="";
+try {
+  projects=JSON.parse(localStorage.getItem("ronaq-projects")||"[]");
+  if(!Array.isArray(projects))projects=[];
+} catch(e){projects=[]}
+
+function newProject(name=""){
+  $("pname").value=name;
+  $("pdesc").value="";
+  $("modal").style.display="flex";
+}
+function closeModal(){$("modal").style.display="none"}
+
+function saveProject(){
+  const name=$("pname").value.trim();
+  const description=$("pdesc").value.trim();
+  if(!name){alert("اكتب اسم المشروع أولًا");return}
+  projects.unshift({id:Date.now(),name,description,date:new Date().toLocaleDateString("ar")});
+  try{
+    localStorage.setItem("ronaq-projects",JSON.stringify(projects));
+  }catch(e){alert("تعذر الحفظ في مساحة المتصفح");return}
+  closeModal();
+  renderProjects();
+  alert("تم حفظ المشروع على هذا الجهاز");
+}
+
+function renderProjects(){
+  const box=$("projects");
+  box.replaceChildren();
+  if(!projects.length){
+    const e=document.createElement("div");
+    e.className="empty";
+    e.textContent="لا توجد مشاريع بعد. أنشئ مشروعك الأول!";
+    box.append(e);
+    return;
+  }
+  projects.forEach(p=>{
+    const row=document.createElement("div");
+    row.className="project";
+    const info=document.createElement("div");
+    info.className="project-info";
+    const title=document.createElement("strong");
+    title.textContent=p.name;
+    const desc=document.createElement("small");
+    desc.textContent=p.date+(p.description?" · "+p.description:"");
+    info.append(title,desc);
+    const del=document.createElement("button");
+    del.className="delete";
+    del.textContent="حذف";
+    del.onclick=()=>{
+      if(confirm("هل تريد حذف المشروع؟")){
+        projects=projects.filter(x=>x.id!==p.id);
+        localStorage.setItem("ronaq-projects",JSON.stringify(projects));
+        renderProjects();
+      }
+    };
+    row.append(info,del);
+    box.append(row);
+  });
+}
+
+function showProjects(){
+  $("projectsSection").scrollIntoView({behavior:"smooth"});
+}
+function home(btn){
+  document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function chooseImage(){$("imageInput").click()}
+
+$("imageInput").addEventListener("change",e=>{
+  const file=e.target.files&&e.target.files[0];
+  if(!file)return;
+  if(!file.type.startsWith("image/")){alert("اختر ملف صورة");return}
+  const reader=new FileReader();
+  reader.onload=event=>{
+    imageData=event.target.result;
+    $("preview").src=imageData;
+    $("preview").style.display="block";
+    $("downloadImage").style.display="inline-block";
+    $("editor").scrollIntoView({behavior:"smooth"});
+  };
+  reader.readAsDataURL(file);
+});
+
+function saveImage(){
+  if(!imageData)return;
+  const a=document.createElement("a");
+  a.href=imageData;
+  a.download="ronaq-image.png";
+  a.click();
+}
+function removeBg(){
+  if(!$("preview").src||$("preview").style.display==="none"){
+    alert("اختر صورة أولًا من قسم معاينة الصور");
+    $("editor").scrollIntoView({behavior:"smooth"});
+    return;
+  }
+  alert("إزالة الخلفية تحتاج إلى ربط خدمة معالجة صور. لم تتم إزالة الخلفية في هذه النسخة.");
+}
+function voiceInput(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){
+    alert("يمكنك استخدام ميكروفون لوحة مفاتيح الهاتف لإملاء النص.");
+    newProject();return;
+  }
+  const rec=new SR();
+  rec.lang="ar";
+  rec.onresult=e=>{
+    newProject();
+    $("pdesc").value=e.results[0][0].transcript;
+  };
+  rec.onerror=()=>alert("تعذر استخدام الميكروفون");
+  try{rec.start()}catch(e){alert("تعذر بدء الإملاء الصوتي")}
+}
+$("modal").addEventListener("click",e=>{
+  if(e.target===$("modal"))closeModal();
+});
+renderProjects();
+if("serviceWorker" in navigator && location.protocol!=="file:"){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
+</script>
+</body>
+</html>
